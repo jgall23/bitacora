@@ -8,7 +8,7 @@ export default async function Home() {
 
   if (!user) redirect("/login");
 
-  if (profile?.rol === "mantenedor" || profile?.rol === "admin") {
+  if (["mantenedor", "supervisor", "admin"].includes(profile?.rol)) {
     redirect("/dashboard");
   }
 

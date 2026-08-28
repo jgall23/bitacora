@@ -68,7 +68,8 @@ export default function DashboardFilters({ equipos, current }) {
           <select value={estado} onChange={(e) => setEstado(e.target.value)}>
             <option value="">Todos</option>
             <option value="pendiente">Pendiente</option>
-            <option value="revisada">Revisada</option>
+            <option value="en_proceso">En proceso</option>
+            <option value="finalizada">Finalizada</option>
           </select>
         </div>
         <div>

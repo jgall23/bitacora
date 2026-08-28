@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
+import { isStaff as isStaffRole } from "@/lib/roles";
 import AppShell from "@/components/AppShell";
 import EquiposManager from "./EquiposManager";
 
@@ -9,7 +10,7 @@ export default async function EquiposPage() {
   const { supabase, user, profile } = await getUserAndProfile();
   if (!user) redirect("/login");
 
-  const isStaff = profile?.rol === "mantenedor" || profile?.rol === "admin";
+  const isStaff = isStaffRole(profile?.rol);
   if (!isStaff) redirect("/bitacoras");
 
   const { data: equipos } = await supabase

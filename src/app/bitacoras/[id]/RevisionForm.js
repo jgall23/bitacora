@@ -6,13 +6,25 @@ import { createClient } from "@/lib/supabase/client";
 
 const GRUPOS = ["G1", "G2", "G3", "G4"];
 
-export default function RevisionForm({ bitacoraId, mantenedorNombre }) {
+export default function RevisionForm({
+  bitacoraId,
+  mantenedorNombre,
+  estadoActual,
+  initial,
+}) {
   const router = useRouter();
   const supabase = createClient();
 
-  const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
-  const [grupo, setGrupo] = useState("G1");
-  const [observaciones, setObservaciones] = useState("");
+  const [estado, setEstado] = useState(
+    estadoActual === "en_proceso" ? "finalizada" : "en_proceso"
+  );
+  const [fecha, setFecha] = useState(
+    initial?.fecha_revision || new Date().toISOString().slice(0, 10)
+  );
+  const [grupo, setGrupo] = useState(initial?.grupo_revision || "G1");
+  const [observaciones, setObservaciones] = useState(
+    initial?.observaciones_mantenedor || ""
+  );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +36,7 @@ export default function RevisionForm({ bitacoraId, mantenedorNombre }) {
     const { error } = await supabase
       .from("bitacoras")
       .update({
-        estado: "revisada",
+        estado,
         mantenedor_nombre: mantenedorNombre,
         fecha_revision: fecha,
         grupo_revision: grupo,
@@ -47,7 +59,7 @@ export default function RevisionForm({ bitacoraId, mantenedorNombre }) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label>Fecha revisión</label>
+          <label>Fecha</label>
           <input
             type="date"
             value={fecha}
@@ -78,6 +90,14 @@ export default function RevisionForm({ bitacoraId, mantenedorNombre }) {
         />
       </div>
 
+      <div>
+        <label>Estado</label>
+        <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+          <option value="en_proceso">En proceso</option>
+          <option value="finalizada">Finalizada</option>
+        </select>
+      </div>
+
       {error && (
         <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
           {error}
@@ -89,7 +109,7 @@ export default function RevisionForm({ bitacoraId, mantenedorNombre }) {
         disabled={loading}
         className="bg-accent text-white font-semibold rounded-xl px-6 py-3 text-sm disabled:opacity-60"
       >
-        {loading ? "Guardando..." : "Marcar como revisada"}
+        {loading ? "Guardando..." : "Guardar seguimiento"}
       </button>
     </form>
   );

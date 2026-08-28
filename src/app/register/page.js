@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -94,6 +95,20 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-panel border border-border rounded-xl3 p-8">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
+            <Image
+              src="/logo-capstone.png"
+              alt="Capstone Copper"
+              width={32}
+              height={32}
+              className="object-contain w-full h-full"
+            />
+          </div>
+          <div className="text-xs uppercase tracking-wide text-accent font-semibold">
+            Capstone Copper · Mantoverde
+          </div>
+        </div>
         <h1 className="text-xl font-bold text-white mb-1">Crear cuenta</h1>
         <p className="text-sm text-muted mb-6">
           Bitácoras Pala y Perforadora - Mantoverde
@@ -136,6 +151,9 @@ export default function RegisterPage() {
               <option value="operador">Operador equipo mina</option>
               <option value="mantenedor">
                 Mantenedor / Jefe de mantención
+              </option>
+              <option value="supervisor">
+                Supervisor / Jefe de Turno
               </option>
             </select>
           </div>

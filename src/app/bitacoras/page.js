@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
+import { isStaff as isStaffRole } from "@/lib/roles";
 import AppShell from "@/components/AppShell";
 import { EstadoBadge, GrupoBadge, ChecklistBadge } from "@/components/UI";
 
@@ -10,11 +11,11 @@ export default async function BitacorasPage() {
   const { supabase, user, profile } = await getUserAndProfile();
   if (!user) redirect("/login");
 
-  const isStaff = profile?.rol === "mantenedor" || profile?.rol === "admin";
+  const isStaff = isStaffRole(profile?.rol);
 
   let query = supabase
     .from("bitacoras")
-    .select("id, fecha, grupo, estado, checklist_despacho, observaciones_operador, equipos(numero_equipo, tipo, modelo)")
+    .select("id, fecha, grupo, estado, numero_sap, checklist_despacho, observaciones_operador, equipos(numero_equipo, tipo, modelo)")
     .order("fecha", { ascending: false })
     .order("created_at", { ascending: false });
 
@@ -61,6 +62,7 @@ export default async function BitacorasPage() {
               <tr className="text-left text-muted border-b border-border">
                 <th className="pb-3 font-medium">Equipo</th>
                 <th className="pb-3 font-medium">Fecha</th>
+                <th className="pb-3 font-medium">N° SAP</th>
                 <th className="pb-3 font-medium">Grupo</th>
                 <th className="pb-3 font-medium">Check list</th>
                 <th className="pb-3 font-medium">Estado</th>
@@ -77,6 +79,7 @@ export default async function BitacorasPage() {
                   <td className="py-3 text-white">
                     {new Date(b.fecha + "T00:00:00").toLocaleDateString("es-CL")}
                   </td>
+                  <td className="py-3 text-white">{b.numero_sap || "—"}</td>
                   <td className="py-3">
                     <GrupoBadge grupo={b.grupo} />
                   </td>

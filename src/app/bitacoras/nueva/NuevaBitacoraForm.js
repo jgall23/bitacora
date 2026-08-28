@@ -15,6 +15,7 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
     new Date().toISOString().slice(0, 10)
   );
   const [grupo, setGrupo] = useState("G1");
+  const [numeroSap, setNumeroSap] = useState("");
   const [checklist, setChecklist] = useState(false);
   const [observaciones, setObservaciones] = useState("");
   const [error, setError] = useState("");
@@ -29,6 +30,11 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
       return;
     }
 
+    if (!numeroSap.trim()) {
+      setError("Ingresa el N° de SAP: actúa como tu firma del formulario.");
+      return;
+    }
+
     setLoading(true);
     const { data, error } = await supabase
       .from("bitacoras")
@@ -38,6 +44,7 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
         operador_nombre: nombreOperador,
         fecha,
         grupo,
+        numero_sap: numeroSap.trim(),
         checklist_despacho: checklist,
         observaciones_operador: observaciones,
       })
@@ -93,14 +100,28 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
         </div>
       </div>
 
-      <div>
-        <label>Fecha</label>
-        <input
-          type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
-          required
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label>Fecha</label>
+          <input
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>N° SAP</label>
+          <input
+            value={numeroSap}
+            onChange={(e) => setNumeroSap(e.target.value)}
+            placeholder="Ej: 10004521"
+            required
+          />
+          <p className="text-xs text-muted mt-1.5">
+            Actúa como tu firma del formulario enviado.
+          </p>
+        </div>
       </div>
 
       <div>

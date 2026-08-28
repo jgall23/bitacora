@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
+import { isStaff as isStaffRole, isSupervisor as isSupervisorRole } from "@/lib/roles";
 import AppShell from "@/components/AppShell";
 import { StatCard, EstadoBadge, GrupoBadge, ChecklistBadge } from "@/components/UI";
 import DashboardFilters from "./DashboardFilters";
@@ -11,7 +12,8 @@ export default async function DashboardPage({ searchParams }) {
   const { supabase, user, profile } = await getUserAndProfile();
   if (!user) redirect("/login");
 
-  const isStaff = profile?.rol === "mantenedor" || profile?.rol === "admin";
+  const isStaff = isStaffRole(profile?.rol);
+  const isSupervisor = isSupervisorRole(profile?.rol);
   if (!isStaff) redirect("/bitacoras");
 
   const { equipo, grupo, estado, fecha_desde, fecha_hasta } = searchParams || {};
@@ -25,6 +27,11 @@ export default async function DashboardPage({ searchParams }) {
     .from("bitacoras")
     .select("id", { count: "exact", head: true })
     .eq("estado", "pendiente");
+
+  const { count: enProceso } = await supabase
+    .from("bitacoras")
+    .select("id", { count: "exact", head: true })
+    .eq("estado", "en_proceso");
 
   const { count: sinChecklist } = await supabase
     .from("bitacoras")
@@ -46,7 +53,7 @@ export default async function DashboardPage({ searchParams }) {
   let query = supabase
     .from("bitacoras")
     .select(
-      "id, fecha, grupo, estado, checklist_despacho, operador_nombre, observaciones_operador, equipos(numero_equipo, tipo, modelo)"
+      "id, fecha, grupo, estado, numero_sap, checklist_despacho, operador_nombre, observaciones_operador, equipos(numero_equipo, tipo, modelo)"
     )
     .order("fecha", { ascending: false })
     .order("created_at", { ascending: false })
@@ -83,17 +90,28 @@ export default async function DashboardPage({ searchParams }) {
             Pala y Perforadora · Capstone Copper Mantoverde
           </p>
         </div>
-        <Link
-          href="/dashboard/equipos"
-          className="text-sm text-muted hover:text-white border border-border rounded-xl px-4 py-2.5 flex items-center gap-2"
-        >
-          <i className="fas fa-truck-monster" />
-          Gestionar equipos
-        </Link>
+        <div className="flex gap-3">
+          {isSupervisor && (
+            <Link
+              href="/dashboard/control"
+              className="text-sm text-white bg-accent rounded-xl px-4 py-2.5 flex items-center gap-2 font-semibold"
+            >
+              <i className="fas fa-diagram-project" />
+              Centro de Control
+            </Link>
+          )}
+          <Link
+            href="/dashboard/equipos"
+            className="text-sm text-muted hover:text-white border border-border rounded-xl px-4 py-2.5 flex items-center gap-2"
+          >
+            <i className="fas fa-truck-monster" />
+            Gestionar equipos
+          </Link>
+        </div>
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-5">
         <StatCard
           icon="fa-book"
           label="Bitácoras totales"
@@ -101,10 +119,15 @@ export default async function DashboardPage({ searchParams }) {
         />
         <StatCard
           icon="fa-hourglass-half"
-          label="Pendientes de revisión"
+          label="Pendientes"
           value={pendientes ?? 0}
-          trend={pendientes > 0 ? `${pendientes} por revisar` : "al día"}
+          trend={pendientes > 0 ? `${pendientes} por iniciar` : "al día"}
           trendType={pendientes > 0 ? "warning" : "good"}
+        />
+        <StatCard
+          icon="fa-gears"
+          label="En proceso"
+          value={enProceso ?? 0}
         />
         <StatCard
           icon="fa-clipboard-check"
@@ -191,6 +214,7 @@ export default async function DashboardPage({ searchParams }) {
               <tr className="text-left text-muted border-b border-border">
                 <th className="pb-3 font-medium">Equipo</th>
                 <th className="pb-3 font-medium">Fecha</th>
+                <th className="pb-3 font-medium">N° SAP</th>
                 <th className="pb-3 font-medium">Grupo</th>
                 <th className="pb-3 font-medium">Operador</th>
                 <th className="pb-3 font-medium">Check list</th>
@@ -212,6 +236,9 @@ export default async function DashboardPage({ searchParams }) {
                     {new Date(b.fecha + "T00:00:00").toLocaleDateString(
                       "es-CL"
                     )}
+                  </td>
+                  <td className="py-3 text-white whitespace-nowrap">
+                    {b.numero_sap || "—"}
                   </td>
                   <td className="py-3">
                     <GrupoBadge grupo={b.grupo} />
