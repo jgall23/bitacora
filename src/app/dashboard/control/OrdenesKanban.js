@@ -28,6 +28,7 @@ const SIGUIENTE_LABEL = {
 export default function OrdenesKanban({
   initialOrdenes,
   equipos,
+  usuarios,
   userId,
   nombreUsuario,
 }) {
@@ -39,7 +40,7 @@ export default function OrdenesKanban({
   const [titulo, setTitulo] = useState("");
   const [equipoId, setEquipoId] = useState(equipos[0]?.id || "");
   const [descripcion, setDescripcion] = useState("");
-  const [asignado, setAsignado] = useState("");
+  const [asignadoId, setAsignadoId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -105,18 +106,20 @@ export default function OrdenesKanban({
     }
 
     setLoading(true);
+    const usuarioSeleccionado = usuarios.find((u) => u.id === asignadoId);
     const { data, error } = await supabase
       .from("ordenes_trabajo")
       .insert({
         titulo: titulo.trim(),
         equipo_id: equipoId || null,
         descripcion: descripcion.trim(),
-        asignado_nombre: asignado.trim() || null,
-        estado: asignado.trim() ? "asignada" : "nueva",
+        asignado_id: usuarioSeleccionado?.id || null,
+        asignado_nombre: usuarioSeleccionado?.nombre_completo || null,
+        estado: usuarioSeleccionado ? "asignada" : "nueva",
         creado_por: userId,
         creado_por_nombre: nombreUsuario,
       })
-      .select("id, codigo, titulo, descripcion, estado, asignado_nombre, created_at, equipos(numero_equipo, tipo, modelo)")
+      .select("id, codigo, titulo, descripcion, estado, asignado_id, asignado_nombre, created_at, equipos(numero_equipo, tipo, modelo)")
       .single();
 
     setLoading(false);
@@ -129,8 +132,38 @@ export default function OrdenesKanban({
     setOrdenes((prev) => [data, ...prev]);
     setTitulo("");
     setDescripcion("");
-    setAsignado("");
+    setAsignadoId("");
     setShowForm(false);
+  }
+
+  async function reasignar(orden, nuevoAsignadoId) {
+    const usuarioSeleccionado = usuarios.find((u) => u.id === nuevoAsignadoId);
+    const nuevoEstado =
+      orden.estado === "nueva" && usuarioSeleccionado
+        ? "asignada"
+        : orden.estado;
+
+    setOrdenes((prev) =>
+      prev.map((o) =>
+        o.id === orden.id
+          ? {
+              ...o,
+              asignado_id: usuarioSeleccionado?.id || null,
+              asignado_nombre: usuarioSeleccionado?.nombre_completo || null,
+              estado: nuevoEstado,
+            }
+          : o
+      )
+    );
+
+    await supabase
+      .from("ordenes_trabajo")
+      .update({
+        asignado_id: usuarioSeleccionado?.id || null,
+        asignado_nombre: usuarioSeleccionado?.nombre_completo || null,
+        estado: nuevoEstado,
+      })
+      .eq("id", orden.id);
   }
 
   return (
@@ -191,11 +224,18 @@ export default function OrdenesKanban({
           </div>
           <div>
             <label>Asignar a (opcional)</label>
-            <input
-              value={asignado}
-              onChange={(e) => setAsignado(e.target.value)}
-              placeholder="Nombre del técnico/mantenedor"
-            />
+            <select
+              value={asignadoId}
+              onChange={(e) => setAsignadoId(e.target.value)}
+            >
+              <option value="">Sin asignar</option>
+              {usuarios.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.nombre_completo} ·{" "}
+                  {u.rol === "mantenedor" ? "Mantenedor" : "Operador"}
+                </option>
+              ))}
+            </select>
           </div>
           {error && (
             <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
@@ -251,12 +291,18 @@ export default function OrdenesKanban({
                         {o.equipos.numero_equipo}
                       </div>
                     )}
-                    {o.asignado_nombre && (
-                      <div className="text-xs text-muted">
-                        <i className="fas fa-user mr-1" />
-                        {o.asignado_nombre}
-                      </div>
-                    )}
+                    <select
+                      value={o.asignado_id || ""}
+                      onChange={(e) => reasignar(o, e.target.value)}
+                      className="!py-1.5 !text-xs"
+                    >
+                      <option value="">Sin asignar</option>
+                      {usuarios.map((u) => (
+                        <option key={u.id} value={u.id}>
+                          {u.nombre_completo}
+                        </option>
+                      ))}
+                    </select>
                     <button
                       onClick={() => avanzar(o)}
                       className="w-full text-xs font-semibold bg-white/5 hover:bg-accent hover:text-white text-muted rounded-lg py-2 transition"

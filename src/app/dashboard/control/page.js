@@ -32,6 +32,12 @@ export default async function ControlPage() {
     .eq("activo", true)
     .order("numero_equipo");
 
+  const { data: usuarios } = await supabase
+    .from("profiles")
+    .select("id, nombre_completo, rol")
+    .in("rol", ["operador", "mantenedor"])
+    .order("nombre_completo");
+
   const { data: ordenes } = await supabase
     .from("ordenes_trabajo")
     .select(
@@ -113,6 +119,7 @@ export default async function ControlPage() {
         <OrdenesKanban
           initialOrdenes={ordenes || []}
           equipos={equipos || []}
+          usuarios={usuarios || []}
           userId={user.id}
           nombreUsuario={profile?.nombre_completo || user.email}
         />
