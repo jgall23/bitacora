@@ -23,10 +23,12 @@ seguimiento y un **Centro de Control** para el Supervisor / Jefe de Turno.
     el detalle).
   - Tiene acceso al **Centro de Control** (`/dashboard/control`): un tablero
     tipo Kanban con el flujo de **Órdenes de Trabajo** (Nueva → Asignada → En
-    progreso → Verificar → Cerrada) y un panel de **Inventario / Spare
-    Parts** con alerta de stock bajo y seguimiento de compra (Disponible →
-    Solicitado → En compra → Comprado), actualizado **en tiempo real** entre
-    todos los que tengan la pantalla abierta.
+    progreso → Verificar → Cerrada), tarjetas de **Técnicos en terreno**
+    (asignación y tarea actual de cada persona con una OT activa) y un panel
+    de **Analítica de Mantenimiento** (órdenes cerradas por día y tiempo
+    promedio de resolución), todo calculado a partir de datos reales del
+    sistema — no incluye un módulo de inventario de repuestos, ya que sin
+    integración con SAP mostraría stock ficticio.
 - **admin** → mismo acceso que Supervisor (rol de respaldo/soporte).
 
 Cada fila de la tabla `bitacoras` representa una hoja física completa (lado
@@ -53,8 +55,8 @@ políticas duplicadas). En vez de eso, corre una sola vez:
 
 Esta migración es aditiva y segura sobre datos existentes: agrega el rol
 `supervisor`, la columna `numero_sap`, cambia los estados de bitácora
-(`revisada` pasa a `finalizada` automáticamente) y crea las tablas
-`ordenes_trabajo` y `repuestos`.
+(`revisada` pasa a `finalizada` automáticamente) y crea la tabla
+`ordenes_trabajo` para el Centro de Control.
 
 ### Primer usuario Supervisor / Mantenedor
 
@@ -111,7 +113,7 @@ src/app/bitacoras                    → lista y creación de bitácoras (operad
 src/app/bitacoras/[id]                → detalle: revisión del mantenedor + directrices del supervisor
 src/app/dashboard                     → dashboard con KPIs, alerta de pendiente más antigua, filtros y tabla
 src/app/dashboard/equipos            → alta de palas/perforadoras
-src/app/dashboard/control            → Centro de Control: Kanban de OT + inventario (Supervisor)
+src/app/dashboard/control            → Centro de Control: Kanban de OT + técnicos activos + analítica (Supervisor)
 ```
 
 ## 7. Personalización rápida
