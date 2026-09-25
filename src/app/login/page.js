@@ -80,7 +80,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 required
-                autoComplete="off"
+                autoComplete="username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nombre@mantoverde.cl"
@@ -97,17 +97,17 @@ export default function LoginPage() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 required
-                autoComplete="off"
+                autoComplete="current-password"
+                aria-describedby={error ? "login-error" : undefined}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="!pl-10 !pr-10"
+                className="!pl-10 !pr-11"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted hover:text-white text-sm"
-                tabIndex={-1}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted hover:text-white text-sm w-8 h-8 flex items-center justify-center rounded-lg"
                 aria-label={
                   showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
                 }
@@ -134,7 +134,11 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
+            <div
+              id="login-error"
+              role="alert"
+              className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2"
+            >
               {error}
             </div>
           )}
@@ -142,8 +146,11 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent hover:opacity-90 transition text-white font-semibold rounded-xl py-3 disabled:opacity-60"
+            className="w-full bg-accent hover:opacity-90 transition text-white font-semibold rounded-xl py-3 disabled:opacity-60 flex items-center justify-center gap-2"
           >
+            {loading && (
+              <i className="fas fa-circle-notch animate-spin" aria-hidden="true" />
+            )}
             {loading ? "Ingresando..." : "Iniciar sesión"}
           </button>
         </form>

@@ -116,38 +116,45 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label>Nombre completo</label>
+            <label htmlFor="nombre">Nombre completo</label>
             <input
+              id="nombre"
               required
+              autoComplete="name"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Nombre y apellido"
             />
           </div>
           <div>
-            <label>Correo</label>
+            <label htmlFor="email">Correo</label>
             <input
+              id="email"
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="nombre@mantoverde.cl"
             />
           </div>
           <div>
-            <label>Contraseña</label>
+            <label htmlFor="password">Contraseña</label>
             <input
+              id="password"
               type="password"
               required
               minLength={6}
+              autoComplete="new-password"
+              aria-describedby={error ? "register-error" : undefined}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Mínimo 6 caracteres"
             />
           </div>
           <div>
-            <label>Rol</label>
-            <select value={rol} onChange={(e) => setRol(e.target.value)}>
+            <label htmlFor="rol">Rol</label>
+            <select id="rol" value={rol} onChange={(e) => setRol(e.target.value)}>
               <option value="operador">Operador equipo mina</option>
               <option value="mantenedor">
                 Mantenedor / Jefe de mantención
@@ -159,7 +166,11 @@ export default function RegisterPage() {
           </div>
 
           {error && (
-            <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
+            <div
+              id="register-error"
+              role="alert"
+              className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2"
+            >
               {error}
             </div>
           )}
@@ -167,8 +178,11 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent hover:opacity-90 transition text-white font-semibold rounded-xl py-3 disabled:opacity-60"
+            className="w-full bg-accent hover:opacity-90 transition text-white font-semibold rounded-xl py-3 disabled:opacity-60 flex items-center justify-center gap-2"
           >
+            {loading && (
+              <i className="fas fa-circle-notch animate-spin" aria-hidden="true" />
+            )}
             {loading ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>

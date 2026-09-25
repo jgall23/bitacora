@@ -35,6 +35,20 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.25);
+}
+
+/* Foco visible para navegación por teclado en cualquier elemento interactivo
+   (accesibilidad: WCAG 2.2 AA "Focus Visible" / "Focus Not Obscured") */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 label {
@@ -47,6 +61,18 @@ label {
 
 button {
   cursor: pointer;
+}
+
+/* Respeta la preferencia del sistema de reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::-webkit-scrollbar {

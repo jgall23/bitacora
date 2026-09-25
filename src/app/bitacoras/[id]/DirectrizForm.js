@@ -45,7 +45,7 @@ export default function DirectrizForm({ bitacoraId, supervisorNombre, initialTex
         placeholder="Ej: Priorizar esta bitácora, coordinar con bodega el repuesto X antes del próximo turno..."
       />
       {error && (
-        <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
+        <div role="alert" className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
           {error}
         </div>
       )}

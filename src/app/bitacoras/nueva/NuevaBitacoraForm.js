@@ -153,7 +153,7 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
       </div>
 
       {error && (
-        <div className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
+        <div role="alert" className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
           {error}
         </div>
       )}
