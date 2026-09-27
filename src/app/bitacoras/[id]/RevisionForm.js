@@ -22,6 +22,7 @@ export default function RevisionForm({
     initial?.fecha_revision || new Date().toISOString().slice(0, 10)
   );
   const [grupo, setGrupo] = useState(initial?.grupo_revision || "G1");
+  const [numeroSap, setNumeroSap] = useState(initial?.numero_sap_mantenedor || "");
   const [observaciones, setObservaciones] = useState(
     initial?.observaciones_mantenedor || ""
   );
@@ -31,6 +32,12 @@ export default function RevisionForm({
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+
+    if (!numeroSap.trim()) {
+      setError("Ingresa tu N° de SAP: actúa como tu firma de esta revisión.");
+      return;
+    }
+
     setLoading(true);
 
     const { error } = await supabase
@@ -40,6 +47,7 @@ export default function RevisionForm({
         mantenedor_nombre: mantenedorNombre,
         fecha_revision: fecha,
         grupo_revision: grupo,
+        numero_sap_mantenedor: numeroSap.trim(),
         observaciones_mantenedor: observaciones,
         reviewed_at: new Date().toISOString(),
       })
@@ -88,6 +96,18 @@ export default function RevisionForm({
           placeholder="Ej: Se encontró nivel de aceite desplazado, se realizó reapriete de abrazaderas..."
           required
         />
+      </div>
+
+      <div>
+        <label>N° SAP</label>
+        <input
+          value={numeroSap}
+          onChange={(e) => setNumeroSap(e.target.value)}
+          placeholder="Ej: 121315"
+        />
+        <p className="text-xs text-muted mt-1.5">
+          Actúa como tu firma de esta revisión.
+        </p>
       </div>
 
       <div>

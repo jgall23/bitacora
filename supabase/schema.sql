@@ -145,12 +145,14 @@ create table if not exists public.bitacoras (
   grupo_revision text check (grupo_revision in ('G1','G2','G3','G4')),
   observaciones_mantenedor text,
   reviewed_at timestamptz,
+  numero_sap_mantenedor text, -- N° SAP del mantenedor; actúa como su firma de la revisión
 
   -- Seguimiento del Supervisor / Jefe de Turno
   directrices_supervisor text,
   supervisor_id uuid references auth.users (id),
   supervisor_nombre text,
   directrices_at timestamptz,
+  numero_sap_supervisor text, -- N° SAP del supervisor; actúa como su firma de la directriz
 
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()

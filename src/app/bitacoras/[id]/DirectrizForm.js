@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function DirectrizForm({ bitacoraId, supervisorNombre, initialText }) {
+export default function DirectrizForm({ bitacoraId, supervisorNombre, initialText, initialSap }) {
   const router = useRouter();
   const supabase = createClient();
 
   const [texto, setTexto] = useState(initialText || "");
+  const [numeroSap, setNumeroSap] = useState(initialSap || "");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +23,7 @@ export default function DirectrizForm({ bitacoraId, supervisorNombre, initialTex
       .update({
         directrices_supervisor: texto,
         supervisor_nombre: supervisorNombre,
+        numero_sap_supervisor: numeroSap.trim() || null,
         directrices_at: new Date().toISOString(),
       })
       .eq("id", bitacoraId);
@@ -44,6 +46,17 @@ export default function DirectrizForm({ bitacoraId, supervisorNombre, initialTex
         onChange={(e) => setTexto(e.target.value)}
         placeholder="Ej: Priorizar esta bitácora, coordinar con bodega el repuesto X antes del próximo turno..."
       />
+      <div>
+        <label>N° SAP (opcional)</label>
+        <input
+          value={numeroSap}
+          onChange={(e) => setNumeroSap(e.target.value)}
+          placeholder="Ej: 121316"
+        />
+        <p className="text-xs text-muted mt-1.5">
+          Actúa como tu firma de esta directriz.
+        </p>
+      </div>
       {error && (
         <div role="alert" className="text-sm text-bad bg-bad/10 border border-bad/30 rounded-lg px-3 py-2">
           {error}

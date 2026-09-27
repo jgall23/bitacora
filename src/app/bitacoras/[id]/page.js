@@ -112,6 +112,7 @@ export default async function BitacoraDetallePage({ params }) {
                 fecha_revision: b.fecha_revision,
                 grupo_revision: b.grupo_revision,
                 observaciones_mantenedor: b.observaciones_mantenedor,
+                numero_sap_mantenedor: b.numero_sap_mantenedor,
               }}
             />
           ) : tieneSeguimiento ? (
@@ -135,6 +136,12 @@ export default async function BitacoraDetallePage({ params }) {
                           b.fecha_revision + "T00:00:00"
                         ).toLocaleDateString("es-CL")
                       : "—"}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-muted mb-1">N° SAP</div>
+                  <div className="text-white font-medium">
+                    {b.numero_sap_mantenedor || "—"}
                   </div>
                 </div>
               </div>
@@ -167,6 +174,7 @@ export default async function BitacoraDetallePage({ params }) {
             bitacoraId={b.id}
             supervisorNombre={profile?.nombre_completo || user.email}
             initialText={b.directrices_supervisor}
+            initialSap={b.numero_sap_supervisor}
           />
         ) : b.directrices_supervisor ? (
           <div>
@@ -175,6 +183,7 @@ export default async function BitacoraDetallePage({ params }) {
             </p>
             <p className="text-xs text-muted">
               {b.supervisor_nombre}
+              {b.numero_sap_supervisor && ` · N° SAP ${b.numero_sap_supervisor}`}
               {b.directrices_at &&
                 ` · ${new Date(b.directrices_at).toLocaleDateString("es-CL")}`}
             </p>
