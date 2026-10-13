@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function LoginPage() {
   const supabase = createClient();
@@ -48,26 +49,29 @@ export default function LoginPage() {
       <div className="pointer-events-none absolute -bottom-32 left-1/4 w-80 h-80 rounded-full bg-good/10 blur-3xl" />
 
       <div className="relative w-full max-w-md bg-panel border border-border rounded-xl3 p-8 shadow-2xl">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
-            <Image
-              src="/logo-capstone.png"
-              alt="Capstone Copper"
-              width={32}
-              height={32}
-              className="object-contain w-full h-full"
-            />
-          </div>
-          <div>
-            <div className="text-xs uppercase tracking-wide text-accent font-semibold">
-              Capstone Copper · Mantoverde
+        <div className="flex items-center justify-between gap-3 mb-2">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-lg bg-white border border-border flex items-center justify-center shrink-0 overflow-hidden p-1">
+              <Image
+                src="/logo-capstone.png"
+                alt="Capstone Copper"
+                width={32}
+                height={32}
+                className="object-contain w-full h-full"
+              />
             </div>
-            <div className="text-sm text-muted">Bitácoras Pala y Perforadora</div>
+            <div className="min-w-0">
+              <div className="text-xs uppercase tracking-wide text-accent font-semibold truncate">
+                Capstone Copper · Mantoverde
+              </div>
+              <div className="text-sm text-muted truncate">Bitácoras Pala y Perforadora</div>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
 
         <div className="mt-6 mb-6">
-          <h1 className="text-2xl font-bold text-white">Bienvenido</h1>
+          <h1 className="text-2xl font-bold text-ink">Bienvenido</h1>
           <p className="text-sm text-muted mt-1">Inicia sesión para continuar</p>
         </div>
 
@@ -107,7 +111,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted hover:text-white text-sm w-8 h-8 flex items-center justify-center rounded-lg"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted hover:text-ink text-sm w-8 h-8 flex items-center justify-center rounded-lg"
                 aria-label={
                   showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
                 }

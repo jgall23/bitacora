@@ -36,7 +36,7 @@ export default function DashboardFilters({ equipos, current }) {
 
   return (
     <div className="bg-panel border border-border rounded-xl2 p-5 md:p-6">
-      <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+      <h3 className="text-ink font-bold mb-4 flex items-center gap-2">
         <i className="fas fa-filter text-accent" />
         Filtros
       </h3>

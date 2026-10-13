@@ -51,7 +51,7 @@ export default function EquiposManager({ equipos }) {
         onSubmit={handleAdd}
         className="bg-panel border border-border rounded-xl2 p-5 md:p-6 space-y-4 h-fit"
       >
-        <h3 className="text-white font-bold">Agregar equipo</h3>
+        <h3 className="text-ink font-bold">Agregar equipo</h3>
 
         <div>
           <label>N° de equipo</label>
@@ -91,7 +91,7 @@ export default function EquiposManager({ equipos }) {
       </form>
 
       <div className="bg-panel border border-border rounded-xl2 p-5 md:p-6 overflow-x-auto">
-        <h3 className="text-white font-bold mb-4">Listado de equipos</h3>
+        <h3 className="text-ink font-bold mb-4">Listado de equipos</h3>
         <table className="w-full text-sm min-w-[480px]">
           <thead>
             <tr className="text-left text-muted border-b border-border">
@@ -105,18 +105,18 @@ export default function EquiposManager({ equipos }) {
           <tbody>
             {equipos.map((eq) => (
               <tr key={eq.id} className="border-b border-border/60 last:border-0">
-                <td className="py-3 text-white font-semibold">
+                <td className="py-3 text-ink font-semibold">
                   {eq.numero_equipo}
                 </td>
-                <td className="py-3 text-white capitalize">{eq.tipo}</td>
-                <td className="py-3 text-white">{eq.modelo}</td>
+                <td className="py-3 text-ink capitalize">{eq.tipo}</td>
+                <td className="py-3 text-ink">{eq.modelo}</td>
                 <td className="py-3">
                   <span
                     className={
                       "text-xs font-semibold px-2.5 py-1 rounded-full " +
                       (eq.activo
                         ? "bg-good/15 text-good"
-                        : "bg-white/10 text-muted")
+                        : "bg-ink/10 text-muted")
                     }
                   >
                     {eq.activo ? "Activo" : "Inactivo"}

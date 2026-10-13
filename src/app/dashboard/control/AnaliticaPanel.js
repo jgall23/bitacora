@@ -3,7 +3,7 @@ export default function AnaliticaPanel({ cerradasPorDia, promedioHoras, totalCer
 
   return (
     <div className="bg-panel border border-border rounded-xl2 p-5 md:p-6">
-      <h3 className="text-white font-bold mb-1 flex items-center gap-2">
+      <h3 className="text-ink font-bold mb-1 flex items-center gap-2">
         <i className="fas fa-chart-column text-accent" />
         Analítica de Mantenimiento
       </h3>
@@ -29,11 +29,11 @@ export default function AnaliticaPanel({ cerradasPorDia, promedioHoras, totalCer
       <div className="border-t border-border pt-4 mt-2 space-y-3 text-sm">
         <div className="flex justify-between">
           <span className="text-muted">OT activas ahora</span>
-          <strong className="text-white">{otActivas}</strong>
+          <strong className="text-ink">{otActivas}</strong>
         </div>
         <div className="flex justify-between">
           <span className="text-muted">Cerradas (últimos 30 días)</span>
-          <strong className="text-white">{totalCerradas30d}</strong>
+          <strong className="text-ink">{totalCerradas30d}</strong>
         </div>
         <div className="flex justify-between">
           <span className="text-muted">Tiempo prom. de resolución</span>

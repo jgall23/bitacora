@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -74,7 +75,7 @@ export default function RegisterPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md bg-panel border border-border rounded-xl3 p-8 text-center">
-          <h1 className="text-xl font-bold text-white mb-3">
+          <h1 className="text-xl font-bold text-ink mb-3">
             Cuenta creada
           </h1>
           <p className="text-muted text-sm mb-6">
@@ -95,21 +96,24 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-panel border border-border rounded-xl3 p-8">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
-            <Image
-              src="/logo-capstone.png"
-              alt="Capstone Copper"
-              width={32}
-              height={32}
-              className="object-contain w-full h-full"
-            />
+        <div className="flex items-center justify-between gap-3 mb-5">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-lg bg-white border border-border flex items-center justify-center shrink-0 overflow-hidden p-1">
+              <Image
+                src="/logo-capstone.png"
+                alt="Capstone Copper"
+                width={32}
+                height={32}
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <div className="text-xs uppercase tracking-wide text-accent font-semibold truncate">
+              Capstone Copper · Mantoverde
+            </div>
           </div>
-          <div className="text-xs uppercase tracking-wide text-accent font-semibold">
-            Capstone Copper · Mantoverde
-          </div>
+          <ThemeToggle />
         </div>
-        <h1 className="text-xl font-bold text-white mb-1">Crear cuenta</h1>
+        <h1 className="text-xl font-bold text-ink mb-1">Crear cuenta</h1>
         <p className="text-sm text-muted mb-6">
           Bitácoras Pala y Perforadora - Mantoverde
         </p>

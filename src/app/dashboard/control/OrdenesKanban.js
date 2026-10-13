@@ -169,7 +169,7 @@ export default function OrdenesKanban({
   return (
     <div className="bg-panel border border-border rounded-xl2 p-5 md:p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-bold flex items-center gap-2">
+        <h3 className="text-ink font-bold flex items-center gap-2">
           <i className="fas fa-diagram-project text-accent" />
           Flujo de Órdenes de Trabajo
         </h3>
@@ -261,7 +261,7 @@ export default function OrdenesKanban({
                 <span className="text-xs font-bold uppercase tracking-wide text-muted">
                   {col.label}
                 </span>
-                <span className="text-xs font-semibold bg-white/10 text-white rounded-full px-2 py-0.5">
+                <span className="text-xs font-semibold bg-ink/10 text-ink rounded-full px-2 py-0.5">
                   {items.length}
                 </span>
               </div>
@@ -282,7 +282,7 @@ export default function OrdenesKanban({
                       </span>
                       <EstadoOTBadge estado={o.estado} />
                     </div>
-                    <div className="text-sm text-white font-semibold leading-snug">
+                    <div className="text-sm text-ink font-semibold leading-snug">
                       {o.titulo}
                     </div>
                     {o.equipos && (
@@ -305,7 +305,7 @@ export default function OrdenesKanban({
                     </select>
                     <button
                       onClick={() => avanzar(o)}
-                      className="w-full text-xs font-semibold bg-white/5 hover:bg-accent hover:text-white text-muted rounded-lg py-2 transition"
+                      className="w-full text-xs font-semibold bg-ink/5 hover:bg-accent hover:text-white text-muted rounded-lg py-2 transition"
                     >
                       {SIGUIENTE_LABEL[o.estado]}{" "}
                       <i className="fas fa-arrow-right ml-1" />

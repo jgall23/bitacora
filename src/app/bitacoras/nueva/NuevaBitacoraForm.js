@@ -137,7 +137,7 @@ export default function NuevaBitacoraForm({ equipos, userId, nombreOperador }) {
           className="w-5 h-5 accent-orange-500 !p-0"
           style={{ width: 20, height: 20 }}
         />
-        <span className="text-sm text-white font-medium">
+        <span className="text-sm text-ink font-medium">
           Realicé Check List de Despacho
         </span>
       </label>

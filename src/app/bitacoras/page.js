@@ -29,7 +29,7 @@ export default async function BitacorasPage() {
     <AppShell profile={profile} active="/bitacoras">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">Mis bitácoras</h1>
+          <h1 className="text-xl font-bold text-ink">Mis bitácoras</h1>
           <p className="text-sm text-muted">
             Bitácoras registradas para tu equipo mina.
           </p>
@@ -72,14 +72,14 @@ export default async function BitacorasPage() {
             <tbody>
               {bitacoras.map((b) => (
                 <tr key={b.id} className="border-b border-border/60 last:border-0">
-                  <td className="py-3 text-white font-semibold">
+                  <td className="py-3 text-ink font-semibold">
                     {b.equipos?.tipo === "pala" ? "Pala" : "Perforadora"}{" "}
                     {b.equipos?.modelo} · N° {b.equipos?.numero_equipo}
                   </td>
-                  <td className="py-3 text-white">
+                  <td className="py-3 text-ink">
                     {new Date(b.fecha + "T00:00:00").toLocaleDateString("es-CL")}
                   </td>
-                  <td className="py-3 text-white">{b.numero_sap || "—"}</td>
+                  <td className="py-3 text-ink">{b.numero_sap || "—"}</td>
                   <td className="py-3">
                     <GrupoBadge grupo={b.grupo} />
                   </td>

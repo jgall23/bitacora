@@ -18,7 +18,7 @@ export default async function NuevaBitacoraPage() {
   return (
     <AppShell profile={profile} active="/bitacoras/nueva">
       <div>
-        <h1 className="text-xl font-bold text-white">Nueva bitácora</h1>
+        <h1 className="text-xl font-bold text-ink">Nueva bitácora</h1>
         <p className="text-sm text-muted">
           Registra las observaciones del turno para el equipo mina.
         </p>

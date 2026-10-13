@@ -99,7 +99,7 @@ export default async function ControlPage() {
   return (
     <AppShell profile={profile} active="/dashboard/control">
       <div>
-        <h1 className="text-xl font-bold text-white">Centro de Control</h1>
+        <h1 className="text-xl font-bold text-ink">Centro de Control</h1>
         <p className="text-sm text-muted">
           Flujo de órdenes de trabajo y analítica de mantenimiento ·
           Supervisor / Jefe de Turno

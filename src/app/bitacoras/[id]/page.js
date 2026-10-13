@@ -35,7 +35,7 @@ export default async function BitacoraDetallePage({ params }) {
     >
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl font-bold text-ink">
             {b.equipos?.tipo === "pala" ? "Pala" : "Perforadora"}{" "}
             {b.equipos?.modelo} · N° {b.equipos?.numero_equipo}
           </h1>
@@ -45,7 +45,7 @@ export default async function BitacoraDetallePage({ params }) {
             {b.numero_sap && (
               <>
                 {" "}
-                · N° SAP <span className="text-white font-medium">{b.numero_sap}</span>
+                · N° SAP <span className="text-ink font-medium">{b.numero_sap}</span>
               </>
             )}
           </p>
@@ -63,7 +63,7 @@ export default async function BitacoraDetallePage({ params }) {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <div className="text-muted mb-1">Operador</div>
-              <div className="text-white font-medium">{b.operador_nombre}</div>
+              <div className="text-ink font-medium">{b.operador_nombre}</div>
             </div>
             <div>
               <div className="text-muted mb-1">Grupo</div>
@@ -71,13 +71,13 @@ export default async function BitacoraDetallePage({ params }) {
             </div>
             <div>
               <div className="text-muted mb-1">Fecha</div>
-              <div className="text-white font-medium">
+              <div className="text-ink font-medium">
                 {new Date(b.fecha + "T00:00:00").toLocaleDateString("es-CL")}
               </div>
             </div>
             <div>
               <div className="text-muted mb-1">N° SAP</div>
-              <div className="text-white font-medium">
+              <div className="text-ink font-medium">
                 {b.numero_sap || "—"}
               </div>
             </div>
@@ -91,7 +91,7 @@ export default async function BitacoraDetallePage({ params }) {
             <div className="text-muted text-sm mb-1">
               Observaciones del operador
             </div>
-            <p className="text-white text-sm whitespace-pre-wrap leading-relaxed">
+            <p className="text-ink text-sm whitespace-pre-wrap leading-relaxed">
               {b.observaciones_operador || "Sin observaciones."}
             </p>
           </div>
@@ -120,7 +120,7 @@ export default async function BitacoraDetallePage({ params }) {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <div className="text-muted mb-1">Mantenedor</div>
-                  <div className="text-white font-medium">
+                  <div className="text-ink font-medium">
                     {b.mantenedor_nombre}
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default async function BitacoraDetallePage({ params }) {
                 </div>
                 <div>
                   <div className="text-muted mb-1">Fecha</div>
-                  <div className="text-white font-medium">
+                  <div className="text-ink font-medium">
                     {b.fecha_revision
                       ? new Date(
                           b.fecha_revision + "T00:00:00"
@@ -140,7 +140,7 @@ export default async function BitacoraDetallePage({ params }) {
                 </div>
                 <div>
                   <div className="text-muted mb-1">N° SAP</div>
-                  <div className="text-white font-medium">
+                  <div className="text-ink font-medium">
                     {b.numero_sap_mantenedor || "—"}
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default async function BitacoraDetallePage({ params }) {
                 <div className="text-muted text-sm mb-1">
                   Observaciones del mantenedor
                 </div>
-                <p className="text-white text-sm whitespace-pre-wrap leading-relaxed">
+                <p className="text-ink text-sm whitespace-pre-wrap leading-relaxed">
                   {b.observaciones_mantenedor}
                 </p>
               </div>
@@ -178,7 +178,7 @@ export default async function BitacoraDetallePage({ params }) {
           />
         ) : b.directrices_supervisor ? (
           <div>
-            <p className="text-white text-sm whitespace-pre-wrap leading-relaxed mb-2">
+            <p className="text-ink text-sm whitespace-pre-wrap leading-relaxed mb-2">
               {b.directrices_supervisor}
             </p>
             <p className="text-xs text-muted">

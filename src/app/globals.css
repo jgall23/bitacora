@@ -6,36 +6,79 @@
   box-sizing: border-box;
 }
 
+/* =========================================================
+   TEMAS — claro / oscuro
+   Todas las clases de Tailwind (bg-panel, text-muted, text-accent,
+   etc.) están resueltas sobre estas variables (ver tailwind.config.js),
+   así que cambiar el atributo data-theme en <html> cambia TODO el
+   sistema de una vez, sin tocar componentes.
+
+   Formato de cada variable: "R G B" (sin rgb(), así Tailwind puede
+   aplicar opacidad con la sintaxis bg-accent/20, text-bad/10, etc.)
+   ========================================================= */
+
+:root,
+[data-theme="dark"] {
+  --color-bg: 15 18 25;
+  --color-panel: 26 35 50;
+  --color-border: 45 58 79;
+  --color-muted: 143 155 181;
+  --color-ink: 230 235 243;
+  --color-accent: 249 115 22;
+  --color-accent2: 251 191 36;
+  --color-good: 74 222 128;
+  --color-bad: 239 68 68;
+}
+
+[data-theme="light"] {
+  --color-bg: 243 245 249;
+  --color-panel: 255 255 255;
+  --color-border: 223 228 237;
+  --color-muted: 100 116 139;
+  --color-ink: 15 23 42;
+  --color-accent: 194 65 12;
+  --color-accent2: 180 83 9;
+  --color-good: 22 136 62;
+  --color-bad: 211 32 32;
+}
+
 html,
 body {
-  background: #0f1219;
-  color: #e6ebf3;
+  background: rgb(var(--color-bg));
+  color: rgb(var(--color-ink));
 }
 
 body {
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter,
     sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 input,
 select,
 textarea {
-  background: #0f1219;
-  border: 1px solid #2d3a4f;
+  background: rgb(var(--color-bg));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 12px;
   padding: 10px 12px;
-  color: #e6ebf3;
+  color: rgb(var(--color-ink));
   font-size: 14px;
   width: 100%;
   outline: none;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: rgb(var(--color-muted));
+  opacity: 0.8;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.25);
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 3px rgb(var(--color-accent) / 0.25);
 }
 
 /* Foco visible para navegación por teclado en cualquier elemento interactivo
@@ -46,14 +89,14 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #f97316;
+  outline: 2px solid rgb(var(--color-accent));
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 label {
   font-size: 13px;
-  color: #8f9bb5;
+  color: rgb(var(--color-muted));
   font-weight: 500;
   margin-bottom: 6px;
   display: block;
@@ -80,6 +123,6 @@ button {
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2d3a4f;
+  background: rgb(var(--color-border));
   border-radius: 8px;
 }

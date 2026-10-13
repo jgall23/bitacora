@@ -128,4 +128,18 @@ src/app/dashboard/control            → Centro de Control: Kanban de OT + técn
 - **Cambiar el logo:** reemplaza `public/logo-capstone.png` por otro archivo
   con el mismo nombre.
 - **Colores / estilo:** `tailwind.config.js` (paleta `bg`, `panel`, `accent`,
-  etc.).
+  etc.) — ver "Tema claro / oscuro" abajo.
+
+## 8. Tema claro / oscuro
+
+El sistema trae un botón (ícono de sol/luna, arriba a la derecha en el login,
+el registro, y en la barra superior de cualquier pantalla ya logeada) para
+alternar entre tema oscuro y tema claro. La preferencia se guarda en el
+navegador (`localStorage`) y se recuerda la próxima vez que se entra.
+
+Técnicamente, todos los colores del sistema están definidos como variables
+CSS en `src/app/globals.css` (bloques `:root` para oscuro y
+`[data-theme="light"]` para claro), y `tailwind.config.js` las conecta a las
+clases normales de Tailwind (`bg-panel`, `text-muted`, `text-accent`, etc.).
+Para ajustar algún color de alguno de los dos temas, solo hay que editar su
+valor en `globals.css` — no hace falta tocar los componentes.

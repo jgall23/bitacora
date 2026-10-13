@@ -83,7 +83,7 @@ export default async function DashboardPage({ searchParams }) {
     <AppShell profile={profile} active="/dashboard">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl font-bold text-ink">
             Dashboard de bitácoras
           </h1>
           <p className="text-sm text-muted">
@@ -102,7 +102,7 @@ export default async function DashboardPage({ searchParams }) {
           )}
           <Link
             href="/dashboard/equipos"
-            className="text-sm text-muted hover:text-white border border-border rounded-xl px-4 py-2.5 flex items-center gap-2"
+            className="text-sm text-muted hover:text-ink border border-border rounded-xl px-4 py-2.5 flex items-center gap-2"
           >
             <i className="fas fa-truck-monster" />
             Gestionar equipos
@@ -145,16 +145,16 @@ export default async function DashboardPage({ searchParams }) {
 
       {/* Alerta bitácora pendiente más urgente */}
       {urgente && (
-        <div className="bg-gradient-to-br from-[#2d1f1f] to-[#241a1a] border-l-4 border-bad rounded-xl2 p-5 md:p-6">
+        <div className="bg-bad/10 border-l-4 border-bad rounded-xl2 p-5 md:p-6">
           <div className="flex items-center gap-2 text-bad font-bold mb-3">
             <i className="fas fa-exclamation-circle" />
             BITÁCORA PENDIENTE MÁS ANTIGUA
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-3">
-            <span className="text-lg font-extrabold text-accent2 bg-black/30 rounded-xl px-3 py-1.5">
+            <span className="text-lg font-extrabold bg-bad text-white rounded-xl px-3 py-1.5">
               N° {urgente.equipos?.numero_equipo}
             </span>
-            <span className="text-white text-sm">
+            <span className="text-ink text-sm">
               {urgente.equipos?.tipo === "pala" ? "Pala" : "Perforadora"}{" "}
               {urgente.equipos?.modelo}
             </span>
@@ -162,22 +162,22 @@ export default async function DashboardPage({ searchParams }) {
             <ChecklistBadge ok={urgente.checklist_despacho} />
           </div>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-1 text-sm mb-3">
-            <div className="flex justify-between border-b border-white/10 py-2">
+            <div className="flex justify-between border-b border-bad/20 py-2">
               <span className="text-muted">Fecha:</span>
-              <span className="text-white font-semibold">
+              <span className="text-ink font-semibold">
                 {new Date(urgente.fecha + "T00:00:00").toLocaleDateString(
                   "es-CL"
                 )}
               </span>
             </div>
-            <div className="flex justify-between border-b border-white/10 py-2">
+            <div className="flex justify-between border-b border-bad/20 py-2">
               <span className="text-muted">Operador:</span>
-              <span className="text-white font-semibold">
+              <span className="text-ink font-semibold">
                 {urgente.operador_nombre}
               </span>
             </div>
           </div>
-          <p className="text-sm text-white/90 mb-4 line-clamp-3">
+          <p className="text-sm text-ink/90 mb-4 line-clamp-3">
             {urgente.observaciones_operador || "Sin observaciones."}
           </p>
           <Link
@@ -197,7 +197,7 @@ export default async function DashboardPage({ searchParams }) {
 
       {/* Tabla */}
       <div className="bg-panel border border-border rounded-xl2 p-5 md:p-6 overflow-x-auto">
-        <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+        <h3 className="text-ink font-bold mb-4 flex items-center gap-2">
           <i className="fas fa-list text-accent" />
           Bitácoras
         </h3>
@@ -228,22 +228,22 @@ export default async function DashboardPage({ searchParams }) {
                   key={b.id}
                   className="border-b border-border/60 last:border-0"
                 >
-                  <td className="py-3 text-white font-semibold whitespace-nowrap">
+                  <td className="py-3 text-ink font-semibold whitespace-nowrap">
                     {b.equipos?.tipo === "pala" ? "Pala" : "Perforadora"}{" "}
                     N° {b.equipos?.numero_equipo}
                   </td>
-                  <td className="py-3 text-white whitespace-nowrap">
+                  <td className="py-3 text-ink whitespace-nowrap">
                     {new Date(b.fecha + "T00:00:00").toLocaleDateString(
                       "es-CL"
                     )}
                   </td>
-                  <td className="py-3 text-white whitespace-nowrap">
+                  <td className="py-3 text-ink whitespace-nowrap">
                     {b.numero_sap || "—"}
                   </td>
                   <td className="py-3">
                     <GrupoBadge grupo={b.grupo} />
                   </td>
-                  <td className="py-3 text-white">{b.operador_nombre}</td>
+                  <td className="py-3 text-ink">{b.operador_nombre}</td>
                   <td className="py-3">
                     <ChecklistBadge ok={b.checklist_despacho} />
                   </td>

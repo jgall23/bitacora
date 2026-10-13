@@ -34,7 +34,7 @@ export default function TecnicosActivos({ tecnicos }) {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-2">
-              <div className="text-white font-bold truncate">
+              <div className="text-ink font-bold truncate">
                 {t.asignado_nombre}
               </div>
               <span
@@ -52,7 +52,7 @@ export default function TecnicosActivos({ tecnicos }) {
                   t.equipos.numero_equipo
                 }`}
             </div>
-            <div className="text-sm text-white/90 leading-snug line-clamp-2">
+            <div className="text-sm text-ink/90 leading-snug line-clamp-2">
               {t.titulo}
             </div>
           </div>

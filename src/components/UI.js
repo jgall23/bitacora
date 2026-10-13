@@ -13,7 +13,7 @@ export function StatCard({ icon, label, value, trend, trendType = "good" }) {
         {label}
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-2xl font-bold text-ink">{value}</span>
         {trend && (
           <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${trendClass}`}>
             {trend}
@@ -40,7 +40,7 @@ export function EstadoBadge({ estado }) {
   return (
     <span
       className={`text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap ${
-        map[estado] || "bg-white/10 text-muted"
+        map[estado] || "bg-ink/10 text-muted"
       }`}
     >
       {labelMap[estado] || estado}
@@ -50,7 +50,7 @@ export function EstadoBadge({ estado }) {
 
 export function EstadoOTBadge({ estado }) {
   const map = {
-    nueva: "bg-white/10 text-white",
+    nueva: "bg-ink/10 text-ink",
     asignada: "bg-accent2/15 text-accent2",
     en_progreso: "bg-blue-500/15 text-blue-400",
     verificar: "bg-purple-500/15 text-purple-300",
@@ -66,7 +66,7 @@ export function EstadoOTBadge({ estado }) {
   return (
     <span
       className={`text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
-        map[estado] || "bg-white/10 text-muted"
+        map[estado] || "bg-ink/10 text-muted"
       }`}
     >
       {labelMap[estado] || estado}
@@ -90,7 +90,7 @@ export function EstadoCompraBadge({ estado }) {
   return (
     <span
       className={`text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
-        map[estado] || "bg-white/10 text-muted"
+        map[estado] || "bg-ink/10 text-muted"
       }`}
     >
       {labelMap[estado] || estado}
@@ -101,7 +101,7 @@ export function EstadoCompraBadge({ estado }) {
 export function GrupoBadge({ grupo }) {
   if (!grupo) return <span className="text-muted text-sm">—</span>;
   return (
-    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/5 text-white border border-border">
+    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-ink/5 text-ink border border-border">
       {grupo}
     </span>
   );

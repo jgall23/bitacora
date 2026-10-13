@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import LogoutButton from "./LogoutButton";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV = {
   operador: [
@@ -40,7 +41,7 @@ export default function AppShell({ profile, active, children }) {
         {/* SIDEBAR */}
         <aside className="bg-panel border border-border rounded-xl3 p-5 md:p-6 flex md:flex-col gap-4 md:gap-8 items-center md:items-stretch">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
+            <div className="w-11 h-11 rounded-xl bg-white border border-border flex items-center justify-center shrink-0 overflow-hidden p-1">
               <Image
                 src="/logo-capstone.png"
                 alt="Capstone Copper"
@@ -68,7 +69,7 @@ export default function AppShell({ profile, active, children }) {
                     "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium whitespace-nowrap transition " +
                     (isActive
                       ? "bg-accent text-white"
-                      : "text-muted hover:bg-white/5")
+                      : "text-muted hover:bg-ink/5")
                   }
                 >
                   <i className={`fas ${item.icon} w-5 text-center`} />
@@ -82,17 +83,20 @@ export default function AppShell({ profile, active, children }) {
 
         {/* MAIN */}
         <main className="flex flex-col gap-5 min-w-0">
-          {/* TOPBAR: saludo al usuario logeado + cerrar sesión (visible en todo tamaño) */}
+          {/* TOPBAR: saludo al usuario logeado + tema + cerrar sesión */}
           <div className="flex items-center justify-between gap-3 bg-panel border border-border rounded-xl2 px-5 py-3.5">
             <div className="min-w-0">
-              <div className="text-white font-semibold text-sm truncate">
+              <div className="text-ink font-semibold text-sm truncate">
                 Hola, {profile?.nombre_completo || "usuario"}
               </div>
               <div className="text-xs text-muted">
                 {ROL_LABEL[rol] || "Usuario"}
               </div>
             </div>
-            <LogoutButton />
+            <div className="flex items-center gap-2 shrink-0">
+              <ThemeToggle />
+              <LogoutButton />
+            </div>
           </div>
 
           {children}
